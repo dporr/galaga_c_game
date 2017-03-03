@@ -4,7 +4,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/keyboard.h>
 
-#define FPS 60.0
+#define FPS 30.0
 #define CANTMOV 5
 #define BACK "wall.png"
 
@@ -25,6 +25,7 @@ typedef struct fondo {
 } fondo_t;
 
 // funciones
+void disprar();
 void dibujarJugador(jugador_t *jugador);
 void dibujarFondo(fondo_t *fondo);
 void moverArriba(jugador_t *jugador);
@@ -54,7 +55,6 @@ int main(int argc, char **argv) {
   al_register_event_source(event_queue, al_get_keyboard_event_source());
   al_register_event_source(event_queue, al_get_timer_event_source(timer));
 
-  //Inicializamos al jugador principal
   jugador_t *player = (jugador_t *)malloc(sizeof(jugador_t));
   player->nave = al_load_bitmap("spacecraft.png");
   player->x = 0;
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   int terminar = 0; //teclado para salir
   ALLEGRO_EVENT ev;//variable que recive evento
 
-  dibujarFondo(fondo);
+ dibujarFondo(fondo);
   
   while(!terminar) {//cuerpo del juego
     al_wait_for_event(event_queue, &ev);
@@ -94,17 +94,16 @@ int main(int argc, char **argv) {
       case ALLEGRO_KEY_RIGHT:	teclas[RIGHT]=1;break;
       }
     } else if(ev.type == ALLEGRO_EVENT_TIMER) {
-            if(teclas[UP]){	moverArriba(player);
-      }else if(teclas[DOWN]){	moverAbajo(player);
-      }else if(teclas[LEFT]){	moverIzquierda(player);
-      }else if(teclas[RIGHT]){	moverDerecha(player);
+            if(teclas[UP]){	moverArriba(player);   dibujarFondo(fondo);
+      }else if(teclas[DOWN]){	moverAbajo(player);    dibujarFondo(fondo);
+      }else if(teclas[LEFT]){	moverIzquierda(player);dibujarFondo(fondo);
+      }else if(teclas[RIGHT]){	moverDerecha(player);  dibujarFondo(fondo);
       }
     }
     // dibujamos al jugador
-  
     dibujarJugador(player);
   }
-  // siempre hay que limpiar memoria
+  // siemple hay que limpiar memoria
   al_destroy_display(display);
   al_destroy_event_queue(event_queue);
   al_destroy_bitmap(fondo->fnave);
@@ -114,44 +113,10 @@ int main(int argc, char **argv) {
   return 0;
 }
 
-
-void dibujarJugador(jugador_t *jugador ) {
- 
-  al_draw_bitmap(jugador->nave, jugador->x, jugador->y, 0);
-  al_flip_display();
-}
-
-
-void dibujarFondo(fondo_t *fondo) {
-  al_draw_bitmap(fondo->fnave, fondo->x, fondo->y, 0);
-  al_flip_display();
-}
-void moverArriba(jugador_t *jugador) {
-  if(jugador->y == 0){
-    jugador->y = 0;
-  }else{
-    jugador->y -= 10;    
-  }
-}
-void moverAbajo(jugador_t *jugador) {
-  if(jugador->y == 540){
-    jugador->y = 540;
-  }else{
-    jugador->y += 10;    
-  }
-}
-
-void moverDerecha(jugador_t *jugador){
-  if(jugador->x == 950){
-    jugador->x = 950;
-  }else{
-    jugador->x += 10;    
-  } 
-}
-void moverIzquierda(jugador_t *jugador) {
-  if(jugador->x == 0){
-    jugador->x = 0;
-  }else{
-    jugador->x -= 10;    
-  }
-}
+//desarrollo de funciones
+void dibujarJugador(jugador_t *jugador){ al_draw_bitmap(jugador->nave, jugador->x, jugador->y, 0);  al_flip_display();}
+void dibujarFondo(fondo_t *fondo)      { al_draw_bitmap(fondo->fnave, fondo->x, fondo->y, 0);  al_flip_display();}
+void moverArriba(jugador_t *jugador)   { if(jugador->y == 0){   jugador->y = 0;   }else{    jugador->y -= 10;  }}
+void moverAbajo(jugador_t *jugador)    { if(jugador->y == 540){ jugador->y = 540; }else{    jugador->y += 10; }}
+void moverDerecha(jugador_t *jugador)  { if(jugador->x == 950){ jugador->x = 950; }else{    jugador->x += 10;  }}
+void moverIzquierda(jugador_t *jugador){ if(jugador->x == 0){   jugador->x = 0;   }else{    jugador->x -= 10;  }}
