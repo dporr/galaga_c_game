@@ -25,7 +25,6 @@ typedef struct fondo {
 } fondo_t;
 
 // funciones
-void disprar();
 void dibujarJugador(jugador_t *jugador);
 void dibujarFondo(fondo_t *fondo);
 void moverArriba(jugador_t *jugador);
@@ -56,12 +55,12 @@ int main(int argc, char **argv) {
   al_register_event_source(event_queue, al_get_timer_event_source(timer));
 
   jugador_t *player = (jugador_t *)malloc(sizeof(jugador_t));
-  player->nave = al_load_bitmap("spacecraft.png");
+  player->nave = al_load_bitmap("res/spacecraft.png");
   player->x = 0;
   player->y = 480;
 
   fondo_t *fondo = (fondo_t *)malloc(sizeof(fondo_t));
-  fondo->fnave = al_load_bitmap("wall.jpg");
+  fondo->fnave = al_load_bitmap("res/wall.jpg");
   fondo->x = 0;
   fondo->y = 0;
   
@@ -74,7 +73,7 @@ int main(int argc, char **argv) {
   int terminar = 0; //teclado para salir
   ALLEGRO_EVENT ev;//variable que recive evento
 
- dibujarFondo(fondo);
+  dibujarFondo(fondo);
   
   while(!terminar) {//cuerpo del juego
     al_wait_for_event(event_queue, &ev);
@@ -100,7 +99,7 @@ int main(int argc, char **argv) {
       }else if(teclas[RIGHT]){	moverDerecha(player);  dibujarFondo(fondo);
       }
     }
-    // dibujamos al jugador
+    
     dibujarJugador(player);
   }
   // siemple hay que limpiar memoria
@@ -114,8 +113,8 @@ int main(int argc, char **argv) {
 }
 
 //desarrollo de funciones
-void dibujarJugador(jugador_t *jugador){ al_draw_bitmap(jugador->nave, jugador->x, jugador->y, 0);  al_flip_display();}
-void dibujarFondo(fondo_t *fondo)      { al_draw_bitmap(fondo->fnave, fondo->x, fondo->y, 0);  al_flip_display();}
+void dibujarJugador(jugador_t *jugador){ al_draw_bitmap(jugador->nave, jugador->x, jugador->y, 0); al_flip_display();}
+void dibujarFondo(fondo_t *fondo)      { al_draw_bitmap(fondo->fnave, fondo->x, fondo->y, 0);      al_flip_display();}
 void moverArriba(jugador_t *jugador)   { if(jugador->y == 0){   jugador->y = 0;   }else{    jugador->y -= 10;  }}
 void moverAbajo(jugador_t *jugador)    { if(jugador->y == 540){ jugador->y = 540; }else{    jugador->y += 10; }}
 void moverDerecha(jugador_t *jugador)  { if(jugador->x == 950){ jugador->x = 950; }else{    jugador->x += 10;  }}
