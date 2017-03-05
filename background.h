@@ -17,5 +17,4 @@ fondo_t* init_background(){
 
 void dibujarFondo() {
   al_draw_bitmap(fondo->bg_image, fondo->x, fondo->y, 0);
-  al_flip_display();
 }
