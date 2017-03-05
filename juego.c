@@ -26,6 +26,8 @@ enum KEYS{UP, DOWN, LEFT, RIGHT };
 int teclas[4] = {0, 0, 0, 0};
 
 int main(int argc, char **argv){
+
+
   menu();
   init_framework_components();
   //Configuraciones miscelaneas

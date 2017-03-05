@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
+#include "audio.h"
 
 #define BACKGROUND_FILE "res/menu.png"
+#define AUDIO_FILE "res/soud01.wav"
 #define SCREEN_W 1000
 #define SCREEN_H 600
 #ifndef MENU_H_
 #define MENU_H_
-
 void menu(){
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP  *background=NULL;
@@ -19,7 +20,7 @@ void menu(){
     if(!background)fprintf(stderr, "Error 003\n");
     al_draw_bitmap(background,0,0,0);
     al_flip_display();
-    al_rest(5.0);
+    aud(AUDIO_FILE);
 
     al_destroy_display(display);
     al_destroy_bitmap(background);
