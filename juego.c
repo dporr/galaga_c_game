@@ -9,10 +9,10 @@
 #include "enemies.h"
 #include "player.h"
 #include "background.h"
-
+#include "menu.h"
 #define FPS 60.0
-#define SCREEN_W 640
-#define SCREEN_H 1000
+#define SCREEN_W 1000
+#define SCREEN_H 600
 //prototipado de funciones
 int init_framework_components();
 int clean();
@@ -25,6 +25,9 @@ enum KEYS{UP, DOWN, LEFT, RIGHT };
 int teclas[4] = {0, 0, 0, 0};
 
 int main(int argc, char **argv){
+  menu();
+
+ 
   init_framework_components();
   //Configuraciones miscelaneas
   al_inhibit_screensaver(1);//evitar suspencion de pc
@@ -108,7 +111,7 @@ int init_framework_components(){
     al_destroy_display(display);
     return -1; 
   }
-  display = al_create_display(SCREEN_H, SCREEN_W);
+  display = al_create_display(SCREEN_W, SCREEN_H);
   if(!display){ 
     fprintf(stderr, "%s\n", "No se pudo crear un display"); 
     al_destroy_display(display);  
