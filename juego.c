@@ -17,6 +17,7 @@
 int init_framework_components();
 int clean();
 int update_screen();
+int colision(bullet_t** bullets,enemy_t** enemies);
 //creacion de variables
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -26,8 +27,6 @@ int teclas[4] = {0, 0, 0, 0};
 
 int main(int argc, char **argv){
   menu();
-
- 
   init_framework_components();
   //Configuraciones miscelaneas
   al_inhibit_screensaver(1);//evitar suspencion de pc
@@ -84,9 +83,14 @@ int main(int argc, char **argv){
   return 0;
 }
 
+int colision(bullet_t** bullets,enemy_t** enemies){
+  return 1;
+}
+
 int update_screen(){
   dibujarFondo();
   display_enemies();
+  display_bullet();
   dibujarJugador(player);
   al_flip_display();
   return 0;
