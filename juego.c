@@ -10,14 +10,14 @@
 #include "player.h"
 #include "background.h"
 #include "menu.h"
-#define FPS 60.0
+#define FPS 30.0
 #define SCREEN_W 1000
 #define SCREEN_H 600
 //prototipado de funciones
 int init_framework_components();
 int clean();
 int update_screen();
-int colision(bullet_t** bullets,enemy_t** enemies);
+int colision();
 //creacion de variables
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -82,9 +82,21 @@ int main(int argc, char **argv){
   clean();
   return 0;
 }
-
-int colision(bullet_t** bullets,enemy_t** enemies){
-  return 1;
+int colision(){
+  for(int j = 0;j<n_bullets;j++){
+    //if(bullets[j]->x == player->x && (bullets[j]->y ) == player->y) return 1;
+       if (
+        (player->x > bullets[j]->x + 10 - 1) || // is player on the right side of bullet?
+        (player->y > bullets[j]->y + 10 - 1) || // is player under bullet?
+        (bullets[j]->x > player->x + 50 - 1) || // is b2 on the right side of player?
+        (bullets[j]->y > player->y + 56 - 1))   // is b2 under player?
+    {
+        return 0;
+    }else{
+      return 1;
+    }
+  }
+  return 0;
 }
 
 int update_screen(){
@@ -92,6 +104,12 @@ int update_screen(){
   display_enemies();
   display_bullet();
   dibujarJugador(player);
+  if(colision()){
+    dead(player);
+    free(bullets);
+    free(enemies);
+    init_enemies();
+  }
   al_flip_display();
   return 0;
 }
