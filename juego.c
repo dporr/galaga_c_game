@@ -38,7 +38,7 @@ int main(int argc, char **argv){
   player = init_player();
   if(!player->nave) clean();
   if(!fondo->bg_image) clean();
-  al_flip_display();
+  al_flip_display(); /*damos vida al display! :D*/
   srand(time(NULL));
   al_start_timer(timer);//comenzamos el timer
   int terminar = 0; //teclado para salir
@@ -63,12 +63,16 @@ int main(int argc, char **argv){
       }
     } else if(ev.type == ALLEGRO_EVENT_TIMER) {
       if(teclas[UP]){
+        dibujarFondo();
        	moverArriba(player);
       }else if(teclas[DOWN]){
+        dibujarFondo();
       	moverAbajo(player);
       }else if(teclas[LEFT]){	
+        dibujarFondo();
         moverIzquierda(player);
       }else if(teclas[RIGHT]){
+        dibujarFondo();
         moverDerecha(player);
       }
     } 
