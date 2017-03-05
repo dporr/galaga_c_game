@@ -1,5 +1,5 @@
 #define PLAYER_SHIP "res/spacecraft.png"
-
+#define PLAYER_EXPLODE "res/expl.png"
 typedef struct jugador {
   int x; // posicion x de la nave
   int y; // posicion y de la nave
@@ -26,6 +26,19 @@ void dibujarJugador(jugador_t *jugador ) {
   al_draw_bitmap(jugador->nave, jugador->x, jugador->y, 0);
 }
 
+void dead(jugador_t *jugador ) {
+  player->nave = al_load_bitmap(PLAYER_EXPLODE);
+  al_draw_scaled_bitmap(player->nave,
+    0,0,256,256,
+    jugador->x - 30,jugador->y - 80,
+    150,150,0);
+    al_flip_display();
+    al_rest(1.0); 
+    free(player);
+    init_player();
+  //al_draw_bitmap(jugador->nave, jugador->x, jugador->y, 0);
+}
+
 void moverArriba(jugador_t *jugador) {
   if(jugador->y <= 0){
     jugador->y = 0;
@@ -47,7 +60,7 @@ void moverDerecha(jugador_t *jugador){
   if(jugador->x >= 950){
     jugador->x = 950;
   }else{
-    jugador->x += 8;    
+    jugador->x += 50;    
   }
   dibujarJugador(jugador);
 }
@@ -55,7 +68,7 @@ void moverIzquierda(jugador_t *jugador) {
   if(jugador->x <= 0){
     jugador->x = 0;
   }else{
-    jugador->x -= 5 ;    
+    jugador->x -= 50 ;    
   }
   dibujarJugador(jugador);
 }
