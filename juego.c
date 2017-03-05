@@ -16,14 +16,13 @@
 //prototipado de funciones
 int init_framework_components();
 int clean();
+int update_screen();
 //creacion de variables
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
 enum KEYS{UP, DOWN, LEFT, RIGHT };
 int teclas[4] = {0, 0, 0, 0};
-
-void update_screen();
 
 int main(int argc, char **argv){
   init_framework_components();
@@ -36,8 +35,10 @@ int main(int argc, char **argv){
   //Inicializamos al jugador principal
   fondo = init_background();
   player = init_player();
+  enemies= init_enemies();
   if(!player->nave) clean();
   if(!fondo->bg_image) clean();
+  if(!enemies) clean();
   al_flip_display(); /*damos vida al display! :D*/
   srand(time(NULL));
   al_start_timer(timer);//comenzamos el timer
@@ -63,23 +64,27 @@ int main(int argc, char **argv){
       }
     } else if(ev.type == ALLEGRO_EVENT_TIMER) {
       if(teclas[UP]){
-        dibujarFondo();
        	moverArriba(player);
       }else if(teclas[DOWN]){
-        dibujarFondo();
       	moverAbajo(player);
       }else if(teclas[LEFT]){	
-        dibujarFondo();
         moverIzquierda(player);
       }else if(teclas[RIGHT]){
-        dibujarFondo();
         moverDerecha(player);
       }
+      update_screen();
     } 
     // dibujamos al jugador
   }
   // siempre hay que limpiar memoria
   clean();
+  return 0;
+}
+
+int update_screen(){
+  dibujarFondo();
+  display_enemies();
+  dibujarJugador(player);
   return 0;
 }
 
