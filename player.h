@@ -16,9 +16,8 @@ jugador_t* player;
 jugador_t* init_player(){
   jugador_t* player = (jugador_t *)malloc(sizeof(jugador_t));
   player->nave = al_load_bitmap(PLAYER_SHIP);
-  player->x = 0;
-  player->y = 480;
-  al_draw_bitmap(player->nave, player->x, player->y, 0);
+  player->x = 500;
+  player->y = 540;
   return player;
 }
 
@@ -28,35 +27,35 @@ void dibujarJugador(jugador_t *jugador ) {
 }
 
 void moverArriba(jugador_t *jugador) {
-  if(jugador->y == 0){
+  if(jugador->y <= 0){
     jugador->y = 0;
   }else{
-    jugador->y -= 60;    
+    jugador->y -= 5;    
   }
   dibujarJugador(jugador);
 }
 void moverAbajo(jugador_t *jugador) {
-  if(jugador->y == 540){
+  if(jugador->y >= 540){
     jugador->y = 540;
   }else{
-    jugador->y += 60;    
+    jugador->y += 8;    
   }
   dibujarJugador(jugador);
 }
 
 void moverDerecha(jugador_t *jugador){
-  if(jugador->x == 950){
+  if(jugador->x >= 950){
     jugador->x = 950;
   }else{
-    jugador->x += 60;    
+    jugador->x += 8;    
   }
   dibujarJugador(jugador);
 }
 void moverIzquierda(jugador_t *jugador) {
-  if(jugador->x == 0){
+  if(jugador->x <= 0){
     jugador->x = 0;
   }else{
-    jugador->x -= 60 ;    
+    jugador->x -= 5 ;    
   }
   dibujarJugador(jugador);
 }
