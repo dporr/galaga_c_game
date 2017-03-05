@@ -88,6 +88,7 @@ int update_screen(){
   dibujarFondo();
   display_enemies();
   dibujarJugador(player);
+  al_flip_display();
   return 0;
 }
 
