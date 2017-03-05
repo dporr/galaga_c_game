@@ -1,6 +1,8 @@
 TO DO:
--Detectar colisiones de mi nave (iterar una cola-arreglo de amenzas?)
+{HECHO}Detectar colisiones de mi nave (iterar una cola-arreglo de amenzas?)
 {HECHO} -Agregar animacion de balas (cambiar posiciòn en Y de cierto proyectil) 
+-Agregar logica de disparos random
+-Agregar logica de disparos  de jugador
 -iterar enemigos para ver si le pegue a alguno (interar enemigos y ver si mi proyectil coincide con alguno)
 -Animar enemigos para que tengan movimientos aleatorios
 

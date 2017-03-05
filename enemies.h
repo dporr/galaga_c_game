@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #define ENEMY_SHIP "res/spacecraft.png"
 #define BULLET_IMG "res/bullet.png"
 #define MAX_BULLETS 15
@@ -40,8 +41,6 @@ enemy_t** init_enemies(){
         (enemies[j][k]).ship = al_load_bitmap(ENEMY_SHIP);;
         (enemies[j][k]).x = 40 + (j * 140);
         (enemies[j][k]).y = 10 + (k * 80);
-        //al_draw_bitmap((enemies[j][k]).ship, (enemies[j][k]).x, (enemies[j][k]).y, ALLEGRO_FLIP_VERTICAL);
-        shot(&(enemies[j][k]));
       }
     }
   }
@@ -55,8 +54,15 @@ void display_enemies() {
         (enemies[j][k]).x,
         (enemies[j][k]).y,
         ALLEGRO_FLIP_VERTICAL);
-
     }
+  }
+  //Cada vez que actualizo una pantalla disparo
+  if(rand()%25 == 0){
+    //who will shot?
+    printf("Disparo\n");
+    shot(&(enemies[rand()%5][rand()%3]));
+  }else{
+    printf("No disparo\n");
   }
 }
 
@@ -77,7 +83,7 @@ void display_bullet(){
       (bullets[j])->x,(bullets[j])->y + 50,
       ALLEGRO_FLIP_VERTICAL); */
       if((bullets[j])->y >= 600){
-        bullets[n_bullets--] = NULL;
+        free(bullets[n_bullets--]);
         j=n_bullets;
       }
       (bullets[j])->y+=10;
