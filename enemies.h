@@ -50,6 +50,8 @@ enemy_t** init_enemies(){
 void display_enemies() {
   for(int j = 0;j<MAX_ROW;j++){
     for(int k = 0;k<ROWS;k++){
+     //(enemies[j][k]).x += (rand()%3) * ((rand()%4));
+     //clea(enemies[j][k]).y += (rand()%5) * ((rand()%4));
       al_draw_bitmap((enemies[j][k]).ship, 
         (enemies[j][k]).x,
         (enemies[j][k]).y,
@@ -67,7 +69,7 @@ void display_enemies() {
 }
 
 void shot(enemy_t* shooter){  
-  if(n_bullets<=MAX_BULLETS){
+  if(n_bullets<MAX_BULLETS){
       bullets[n_bullets] = (bullet_t*) malloc(sizeof(bullet_t));
       (bullets[n_bullets])->x = shooter->x + 10;
       (bullets[n_bullets])->y = shooter->y + 10;
@@ -77,14 +79,13 @@ void shot(enemy_t* shooter){
 }
 
 void display_bullet(){
-  if(n_bullets<=MAX_BULLETS){
+  if(n_bullets<MAX_BULLETS){
     for(int j = 0;j<n_bullets;j++){
-      /*al_draw_bitmap((bullets[j])->bullet_bmp,
-      (bullets[j])->x,(bullets[j])->y + 50,
-      ALLEGRO_FLIP_VERTICAL); */
       if((bullets[j])->y >= 600){
-        free(bullets[n_bullets--]);
-        j=n_bullets;
+        n_bullets--;
+        continue;
+        //free(bullets[j])
+        //bullets[j] = (bullet_t*) malloc(sizeof(bullet_t));;
       }
       (bullets[j])->y+=10;
       al_draw_scaled_bitmap((bullets[j])->bullet_bmp,
