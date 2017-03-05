@@ -8,66 +8,42 @@
 //Own includes
 #include "enemies.h"
 #include "player.h"
+#include "background.h"
 
 #define FPS 60.0
-#define CANTMOV 5
-#define BACK "res/wall.png"
 #define SCREEN_W 640
 #define SCREEN_H 1000
-
 //prototipado de funciones
 int init_framework_components();
-
+int clean();
 //creacion de variables
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
-ALLEGRO_BITMAP *buffer;
 enum KEYS{UP, DOWN, LEFT, RIGHT };
 int teclas[4] = {0, 0, 0, 0};
 
-typedef struct fondo {
-  int x; // posicion x de la nave
-  int y; // posicion y de la nave
-  ALLEGRO_BITMAP *fnave; //imagen a renderizar
-} fondo_t;
+void update_screen();
 
-void dibujarFondo(fondo_t *fondo) {
-  al_draw_bitmap(fondo->fnave, fondo->x, fondo->y, 0);
-  al_flip_display();
-}
 int main(int argc, char **argv){
   init_framework_components();
-
   //Configuraciones miscelaneas
   al_inhibit_screensaver(1);//evitar suspencion de pc
   al_set_window_title(display, "Space"); //titulo de la ventana
-
   //Registramos las fuentes de eventos
   al_register_event_source(event_queue, al_get_keyboard_event_source());
   al_register_event_source(event_queue, al_get_timer_event_source(timer));
-
   //Inicializamos al jugador principal
+  fondo = init_background();
   player = init_player();
-
-  fondo_t *fondo = (fondo_t *)malloc(sizeof(fondo_t));
-  fondo->fnave = al_load_bitmap(BACK);
-  fondo->x = 0;
-  fondo->y = 0;
-  
-  if(!player->nave) {
-    fprintf(stderr, "%s\n", "No se pudo crear un display");
-    al_destroy_display(display); 
-    al_destroy_event_queue(event_queue);
-    al_destroy_timer(timer);
-    return -1;
-  }
+  if(!player->nave) clean();
+  if(!fondo->bg_image) clean();
+  al_flip_display();
   srand(time(NULL));
   al_start_timer(timer);//comenzamos el timer
   int terminar = 0; //teclado para salir
   ALLEGRO_EVENT ev;//variable que recive evento
-  dibujarFondo(fondo);
-  level_generator(enemies_r);
+ // level_generator(enemies_r);
   while(!terminar) {//cuerpo del juego
     al_wait_for_event(event_queue, &ev);
     if(ev.type == ALLEGRO_EVENT_KEY_UP) {
@@ -99,17 +75,21 @@ int main(int argc, char **argv){
     // dibujamos al jugador
   }
   // siempre hay que limpiar memoria
+  clean();
+  return 0;
+}
+
+int clean(){
   al_destroy_display(display);
   al_destroy_event_queue(event_queue);
-  al_destroy_bitmap(fondo->fnave);
+  al_destroy_bitmap(fondo->bg_image);
   al_destroy_bitmap(player->nave);
   al_destroy_timer(timer);
   free(player);
   return 0;
 }
-
 int init_framework_components(){
-    //inicializacion del librerias
+  //inicializacion del librerias
   if(!al_init()) { 
     fprintf(stderr, "%s\n", "No se pudo inicializar allegro 5"); 
     return -1; 
