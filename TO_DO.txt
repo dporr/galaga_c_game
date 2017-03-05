@@ -1,0 +1,11 @@
+TO DO:
+-Detectar colisiones de mi nave (iterar una cola-arreglo de amenzas?)
+-Agregar animacion de balas (cambiar posiciòn en Y de cierto proyectil)
+-iterar enemigos para ver si le pegue a alguno (interar enemigos y ver si mi proyectil coincide con alguno)
+-Animar enemigos para que tengan movimientos aleatorios
+
+
+EXTRAS: 
+-Agregar logica de bosses de nivel
+-Agregar "trucos de armas especiales"
+-Agregar "logica de niveles"
