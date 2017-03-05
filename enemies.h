@@ -1,12 +1,14 @@
-#define MAX_ENEMIES 12
-
+#define ENEMY_SHIP "res/spacecraft.png"
+#define MAX_ENEMIES 15
+#define ROWS 3
+#define MAX_ROW 5
 //Enemigos genericos
 typedef struct enemy {
   int x; // posicion x de la nave
   int y; // posicion y de la nave
   int health;
   int alive;// esta viva
-  ALLEGRO_BITMAP *enemy_ship; //imagen a renderizar
+  ALLEGRO_BITMAP *ship; //imagen a renderizar
 } enemy_t;
 
 //Queremos que haya un boss en ciertos niveles o cuando el usuario alcance cierto punteo
@@ -17,30 +19,32 @@ typedef struct boss {
   int powers;
   ALLEGRO_BITMAP *boss_ship; //imagen a renderizar
 } boss_t;
+
 //Prototipo funciones
-void dibujarEnemigo(enemy_t *jugador);
-void level_generator(enemy_t** enemies_r);
-//Manejaremos enemigos en 3 grupos diferentes
-enemy_t** enemies_r,enemies_rand,enemies_l;
-//Definimos animaciones de inicio del nivel para hacerlo llamativo
-void cool_r_entrance(enemy_t** enemies_r){}
-void cool_rand_entrance(enemy_t** enemies_rand){}
-void cool_l_entrance(enemy_t** enemies_l){}
-void dibujarEnemigo(enemy_t *jugador) {
-  al_draw_bitmap(jugador->enemy_ship, jugador->x, jugador->y, 0);
-  al_flip_display();
+void display_enemies();
+enemy_t** init_enemies();
+
+enemy_t** enemies;
+enemy_t** init_enemies(){
+  enemies = (enemy_t**) malloc(sizeof(enemy_t*) * ROWS);
+  if(enemies){
+    for(int j = 0;j<MAX_ROW;j++){
+      enemies[j] = (enemy_t*) malloc(sizeof(enemy_t) * MAX_ROW);
+      for(int k = 0;k<ROWS;k++){
+        (enemies[j][k]).ship = al_load_bitmap(ENEMY_SHIP);
+        (enemies[j][k]).x = 40 + (j * 140);
+        (enemies[j][k]).y = 10 + (k * 80);;
+        al_draw_bitmap((enemies[j][k]).ship, (enemies[j][k]).x, (enemies[j][k]).y, ALLEGRO_FLIP_VERTICAL);
+      }
+    }
+  }
+  return enemies;
 }
 
-
-//generamos distintos niveles de dificultad
-void level_generator(enemy_t** enemies_r){//,enemy_t** enemies_rand,enemy_t** enemies_l){
-  for(int i=0;i<4;i++){
-    enemies_r = (enemy_t** )malloc(sizeof(enemies_r));
-    (enemies_r[i])->enemy_ship = al_load_bitmap("spacecraft.png");
-    (enemies_r[i])->x = 200 + (100 * i);
-    (enemies_r[i])->y = 200 + (100 * i);
-    (enemies_r[i])->health = 1;
-    (enemies_r[i])->alive = 1;
-    dibujarEnemigo((enemies_r[i]));
+void display_enemies() {
+  for(int j = 0;j<MAX_ROW;j++){
+    for(int k = 0;k<ROWS;k++){
+      al_draw_bitmap((enemies[j][k]).ship, (enemies[j][k]).x, (enemies[j][k]).y, ALLEGRO_FLIP_VERTICAL);
+    }
   }
 }
