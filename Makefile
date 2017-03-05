@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS=-Wall -I/usr/local/include -L/usr/local/lib
+CFLAGS=-Wall -I/usr/local/include -L/usr/local/lib --debug
 ALLEGRO_CFLAGS=-Wall -I/usr/local/include -L/usr/local/lib -lallegro_image -lallegro
 
 juego: juego.c
-	$(CC) juego.c -o juego $(ALLEGRO_CFLAGS)
+	$(CC) juego.c -o juego $(ALLEGRO_CFLAGS) --debug
 
 .PHONY: clean
 clean:
