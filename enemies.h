@@ -76,22 +76,27 @@ void shot(enemy_t* shooter){
       (bullets[n_bullets])->bullet_bmp = al_load_bitmap(BULLET_IMG);
       n_bullets++;
   }
+  display_bullet();
 }
 
 void display_bullet(){
   if(n_bullets<MAX_BULLETS){
     for(int j = 0;j<n_bullets;j++){
-      if((bullets[j])->y >= 600){
-        n_bullets--;
-        continue;
+      if(!((bullets[j])->y >= 600)){
+        (bullets[j])->y+=10;
+        al_draw_scaled_bitmap((bullets[j])->bullet_bmp,
+        0,0,128,128,
+        (bullets[j])->x,(bullets[j])->y,
+        20,20,ALLEGRO_FLIP_VERTICAL); 
         //free(bullets[j])
         //bullets[j] = (bullet_t*) malloc(sizeof(bullet_t));;
+        continue;
       }
-      (bullets[j])->y+=10;
-      al_draw_scaled_bitmap((bullets[j])->bullet_bmp,
-      0,0,128,128,
-      (bullets[j])->x,(bullets[j])->y,
-      20,20,ALLEGRO_FLIP_VERTICAL); 
+      if(j < n_bullets-1){
+        bullets[j] = bullets[j+1];
+        j--;
+        n_bullets--;
+      }
     }
   }
 }
