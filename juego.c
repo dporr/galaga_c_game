@@ -25,8 +25,8 @@ int colision();
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
-enum KEYS{UP, DOWN, LEFT, RIGHT };
-int teclas[4] = {0, 0, 0, 0};
+enum KEYS{UP, DOWN, LEFT, RIGHT ,SPACE};
+int teclas[5] = {0, 0, 0, 0,0};
 
 int main(int argc, char **argv){
   
@@ -61,14 +61,16 @@ int main(int argc, char **argv){
       case ALLEGRO_KEY_UP:      teclas[UP]=0;	break;
       case ALLEGRO_KEY_DOWN:	teclas[DOWN]=0;	break;
       case ALLEGRO_KEY_LEFT:	teclas[LEFT]=0;	break;
-      case ALLEGRO_KEY_RIGHT:	teclas[RIGHT]=0;break;
+      case ALLEGRO_KEY_RIGHT: teclas[RIGHT]=0;break;
+      case ALLEGRO_KEY_SPACE: teclas[SPACE]=0;break;
       }
     } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN){
       switch(ev.keyboard.keycode){
       case ALLEGRO_KEY_UP:	teclas[UP]=1;	break;
       case ALLEGRO_KEY_DOWN:	teclas[DOWN]=1;	break;
       case ALLEGRO_KEY_LEFT:	teclas[LEFT]=1;	break;
-      case ALLEGRO_KEY_RIGHT:	teclas[RIGHT]=1;break;
+      case ALLEGRO_KEY_RIGHT: teclas[RIGHT]=1;break;
+      case ALLEGRO_KEY_SPACE: teclas[SPACE]=1;break;
       }
     } else if(ev.type == ALLEGRO_EVENT_TIMER) {
       if(teclas[UP]){
@@ -79,6 +81,8 @@ int main(int argc, char **argv){
 	moverIzquierda(player);
       }else if(teclas[RIGHT]){
 	moverDerecha(player);
+      }else if(teclas[SPACE]){
+        p_shoot();
       }
       update_screen();
      
