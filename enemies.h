@@ -1,9 +1,9 @@
 #include <stdlib.h>
-#define ENEMY_SHIP "res/spacecraft.png"
+#define ENEMY_SHIP "res/enem.png"
 #define BULLET_IMG "res/bullet.png"
 #define MAX_BULLETS 15
 #define ROWS 3
-#define MAX_ROW 5
+#define MAX_ROW 7
 //Enemigos genericos
 typedef struct enemy {
   int x; // posicion x de la nave

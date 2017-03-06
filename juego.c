@@ -12,6 +12,7 @@
 #include "menu.h"
 #include "gameOver.h"
 #include "audio.h"
+#include "balas.h"
 
 #define FPS 30.0
 #define SCREEN_W 1000
@@ -25,13 +26,19 @@ int colision();
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
+
 enum KEYS{UP, DOWN, LEFT, RIGHT };
 int teclas[4] = {0, 0, 0, 0};
 
 int main(int argc, char **argv){
+
+
+
+
   
   menu("res/wel.png");
   aud("res/soud02.wav");
+  bal();
   init_framework_components();
   //Configuraciones miscelaneas
   al_inhibit_screensaver(1);//evitar suspencion de pc
@@ -41,8 +48,12 @@ int main(int argc, char **argv){
   al_register_event_source(event_queue, al_get_timer_event_source(timer));
   //Inicializamos al jugador principal
   fondo = init_background();
+
   player = init_player();
   enemies= init_enemies();
+  
+
+
   if(!player->nave) clean();
   if(!fondo->bg_image) clean();
   if(!enemies) clean();
@@ -91,6 +102,7 @@ int main(int argc, char **argv){
   
   return 0;
 }
+
 int colision(){
   for(int j = 0;j<n_bullets;j++){
     //if(bullets[j]->x == player->x && (bullets[j]->y ) == player->y) return 1;
@@ -123,7 +135,6 @@ int update_screen(){
   al_flip_display();
   return 0;
 }
-
 int clean(){
   al_destroy_display(display);
   al_destroy_event_queue(event_queue);
@@ -159,3 +170,4 @@ int init_framework_components(){
   event_queue = al_create_event_queue(); //Cola global para eventos
   return 0;
 }
+
