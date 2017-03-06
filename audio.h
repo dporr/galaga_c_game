@@ -15,8 +15,8 @@ void aud(const char *filename){
   if (!sample)               printf( "Audio clip sample not loaded!\n" );
   /* Loop the sample until the display closes. */
   al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
-  al_rest(5.0); 
-  al_destroy_sample(sample);
+  //  al_rest(5.0); 
+  //al_destroy_sample(sample);
 }
 /*                                                                                                                                               
 ERRORES                                                                                                                                        

@@ -10,6 +10,9 @@
 #include "player.h"
 #include "background.h"
 #include "menu.h"
+#include "gameOver.h"
+#include "audio.h"
+
 #define FPS 30.0
 #define SCREEN_W 1000
 #define SCREEN_H 600
@@ -26,9 +29,9 @@ enum KEYS{UP, DOWN, LEFT, RIGHT };
 int teclas[4] = {0, 0, 0, 0};
 
 int main(int argc, char **argv){
-
-
-  menu();
+  
+  menu("res/wel.png");
+  aud("res/soud02.wav");
   init_framework_components();
   //Configuraciones miscelaneas
   al_inhibit_screensaver(1);//evitar suspencion de pc
@@ -48,40 +51,44 @@ int main(int argc, char **argv){
   al_start_timer(timer);//comenzamos el timer
   int terminar = 0; //teclado para salir
   ALLEGRO_EVENT ev;//variable que recive evento
- // level_generator(enemies_r);
+  // level_generator(enemies_r);
+ 
   while(!terminar) {//cuerpo del juego
     al_wait_for_event(event_queue, &ev);
     if(ev.type == ALLEGRO_EVENT_KEY_UP) {
       switch(ev.keyboard.keycode) {
-        case ALLEGRO_KEY_ESCAPE:	terminar = 1; break;
-        case ALLEGRO_KEY_UP:      teclas[UP]=0;	break;
-        case ALLEGRO_KEY_DOWN:	teclas[DOWN]=0;	break;
-        case ALLEGRO_KEY_LEFT:	teclas[LEFT]=0;	break;
-        case ALLEGRO_KEY_RIGHT:	teclas[RIGHT]=0;break;
+      case ALLEGRO_KEY_ESCAPE:	terminar = 1; break;
+      case ALLEGRO_KEY_UP:      teclas[UP]=0;	break;
+      case ALLEGRO_KEY_DOWN:	teclas[DOWN]=0;	break;
+      case ALLEGRO_KEY_LEFT:	teclas[LEFT]=0;	break;
+      case ALLEGRO_KEY_RIGHT:	teclas[RIGHT]=0;break;
       }
     } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN){
       switch(ev.keyboard.keycode){
-        case ALLEGRO_KEY_UP:	teclas[UP]=1;	break;
-        case ALLEGRO_KEY_DOWN:	teclas[DOWN]=1;	break;
-        case ALLEGRO_KEY_LEFT:	teclas[LEFT]=1;	break;
-        case ALLEGRO_KEY_RIGHT:	teclas[RIGHT]=1;break;
+      case ALLEGRO_KEY_UP:	teclas[UP]=1;	break;
+      case ALLEGRO_KEY_DOWN:	teclas[DOWN]=1;	break;
+      case ALLEGRO_KEY_LEFT:	teclas[LEFT]=1;	break;
+      case ALLEGRO_KEY_RIGHT:	teclas[RIGHT]=1;break;
       }
     } else if(ev.type == ALLEGRO_EVENT_TIMER) {
       if(teclas[UP]){
-       	moverArriba(player);
+	moverArriba(player);
       }else if(teclas[DOWN]){
-      	moverAbajo(player);
+	moverAbajo(player);
       }else if(teclas[LEFT]){	
-        moverIzquierda(player);
+	moverIzquierda(player);
       }else if(teclas[RIGHT]){
-        moverDerecha(player);
+	moverDerecha(player);
       }
       update_screen();
+     
     } 
     // dibujamos al jugador
   }
   // siempre hay que limpiar memoria
+
   clean();
+  
   return 0;
 }
 int colision(){
@@ -107,10 +114,11 @@ int update_screen(){
   display_bullet();
   dibujarJugador(player);
   if(colision()){
+    gameOver("res/gameOver.png");
     dead(player);
     free(bullets);
     free(enemies);
-    init_enemies();
+    init_enemies();     
   }
   al_flip_display();
   return 0;
