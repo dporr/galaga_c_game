@@ -25,6 +25,7 @@ void p_shoot();
 jugador_t* player;
 jugador_t* init_player(){
   jugador_t* player = (jugador_t *)malloc(sizeof(jugador_t));
+  p_bullets = (pbullet_t**) malloc(sizeof(pbullet_t) * P_MAX_BULLET);
   player->nave = al_load_bitmap(PLAYER_SHIP);
   player->x = 500;
   player->y = 540;
@@ -86,17 +87,16 @@ void p_shoot(){
   if(pn_bullets<P_MAX_BULLET){
     p_bullets[pn_bullets] = (pbullet_t*) malloc(sizeof(pbullet_t));
     (p_bullets[pn_bullets])->x = player->x + 10;
-    (p_bullets[pn_bullets])->y = player->y + 10;
+    (p_bullets[pn_bullets])->y = player->y - 10;
     (p_bullets[pn_bullets])->bullet_bmp = al_load_bitmap(BULLET_IMG);
     pn_bullets++;
   }
-  draw_p_shoot();
 }
 void draw_p_shoot(){
   if(pn_bullets<P_MAX_BULLET){
     for(int j = 0;j<pn_bullets;j++){
-      if(!((p_bullets[j])->y >= 600)){
-        (p_bullets[j])->y+=10;
+      if((p_bullets[j])->y > 0){
+        (p_bullets[j])->y-=10;
         al_draw_scaled_bitmap((p_bullets[j])->bullet_bmp,
         0,0,128,128,
         (p_bullets[j])->x,(p_bullets[j])->y,
@@ -105,7 +105,7 @@ void draw_p_shoot(){
         //p_bullets[j] = (bullet_t*) malloc(sizeof(bullet_t));;
         continue;
       }
-      if(j < pn_bullets-1){
+      if(j > 0){
         p_bullets[j] = p_bullets[j+1];
         j--;
         pn_bullets--;
