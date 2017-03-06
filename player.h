@@ -53,7 +53,7 @@ void moverArriba(jugador_t *jugador) {
   if(jugador->y <= 0){
     jugador->y = 0;
   }else{
-    jugador->y -= 5;    
+    jugador->y -= 15;    
   }
   dibujarJugador(jugador);
 }
@@ -61,7 +61,7 @@ void moverAbajo(jugador_t *jugador) {
   if(jugador->y >= 540){
     jugador->y = 540;
   }else{
-    jugador->y += 8;    
+    jugador->y += 15;    
   }
   dibujarJugador(jugador);
 }
@@ -70,7 +70,7 @@ void moverDerecha(jugador_t *jugador){
   if(jugador->x >= 950){
     jugador->x = 950;
   }else{
-    jugador->x += 50;    
+    jugador->x += 15;    
   }
   dibujarJugador(jugador);
 }
@@ -78,10 +78,11 @@ void moverIzquierda(jugador_t *jugador) {
   if(jugador->x <= 0){
     jugador->x = 0;
   }else{
-    jugador->x -= 50 ;    
+    jugador->x -= 15 ;    
   }
   dibujarJugador(jugador);
 }
+<<<<<<< HEAD
 
 void p_shoot(){  
   if(pn_bullets<P_MAX_BULLET){
@@ -115,3 +116,5 @@ void draw_p_shoot(){
     }
   }
 }
+=======
+>>>>>>> 8082c9617579cd345a84d1ddefae27f59f1477bf
