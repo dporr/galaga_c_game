@@ -122,6 +122,7 @@ int update_screen(){
   dibujarFondo();
   display_enemies();
   display_bullet();
+  draw_p_shoot();
   dibujarJugador(player);
   if(colision()){
     gameOver("res/gameOver.png");

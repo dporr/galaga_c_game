@@ -21,9 +21,9 @@ void gameOver(const char *filename){
     al_flip_display();
     aud(AUDIO_FILE1);
     al_rest(2.0);
-    al_destroy_display(display);
     al_destroy_bitmap(background);
-    al_uninstall_system();  
+    al_destroy_display(display);
+    //al_uninstall_system();  
 }
 /*
 ERRORES
