@@ -82,8 +82,6 @@ void moverIzquierda(jugador_t *jugador) {
   }
   dibujarJugador(jugador);
 }
-<<<<<<< HEAD
-
 void p_shoot(){  
   if(pn_bullets<P_MAX_BULLET){
     p_bullets[pn_bullets] = (pbullet_t*) malloc(sizeof(pbullet_t));
@@ -94,7 +92,6 @@ void p_shoot(){
   }
   draw_p_shoot();
 }
-
 void draw_p_shoot(){
   if(pn_bullets<P_MAX_BULLET){
     for(int j = 0;j<pn_bullets;j++){
@@ -116,5 +113,3 @@ void draw_p_shoot(){
     }
   }
 }
-=======
->>>>>>> 8082c9617579cd345a84d1ddefae27f59f1477bf

@@ -26,21 +26,10 @@ int colision();
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
-<<<<<<< HEAD
+
 enum KEYS{UP, DOWN, LEFT, RIGHT ,SPACE};
 int teclas[5] = {0, 0, 0, 0,0};
-=======
-
-enum KEYS{UP, DOWN, LEFT, RIGHT };
-int teclas[4] = {0, 0, 0, 0};
->>>>>>> 8082c9617579cd345a84d1ddefae27f59f1477bf
-
-int main(int argc, char **argv){
-
-
-
-
-  
+int main(int argc, char **argv){  
   menu("res/wel.png");
   aud("res/soud02.wav");
   bal();
