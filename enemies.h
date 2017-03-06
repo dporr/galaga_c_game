@@ -3,7 +3,7 @@
 #define BULLET_IMG "res/bullet.png"
 #define MAX_BULLETS 15
 #define ROWS 3
-#define MAX_ROW 7
+#define MAX_ROW 5
 //Enemigos genericos
 typedef struct enemy {
   int x; // posicion x de la nave
@@ -39,7 +39,7 @@ enemy_t** init_enemies(){
       enemies[j] = (enemy_t*) malloc(sizeof(enemy_t) * MAX_ROW);
       for(int k = 0;k<ROWS;k++){
         (enemies[j][k]).ship = al_load_bitmap(ENEMY_SHIP);;
-        (enemies[j][k]).x = 40 + (j * 140);
+        (enemies[j][k]).x = 40 + (j * 180);
         (enemies[j][k]).y = 10 + (k * 80);
       }
     }
@@ -59,12 +59,10 @@ void display_enemies() {
     }
   }
   //Cada vez que actualizo una pantalla disparo
-  if(rand()%25 == 0){
+  if(rand()%35 == 0){
     //who will shot?
-    printf("Disparo\n");
     shot(&(enemies[rand()%5][rand()%3]));
   }else{
-    printf("No disparo\n");
   }
 }
 
