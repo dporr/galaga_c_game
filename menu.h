@@ -2,7 +2,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 
-#define BACKGROUND_FILE "res/menu.png"
+#define BACKGROUND_FILE "res/wel.png"
 #define SCREEN_W 1000
 #define SCREEN_H 600
 #ifndef MENU_H_
@@ -19,7 +19,7 @@ void menu(){
     if(!background)fprintf(stderr, "Error 003\n");
     al_draw_bitmap(background,0,0,0);
     al_flip_display();
-    al_rest(0.0);
+    al_rest(1.0);
     al_destroy_display(display);
     al_destroy_bitmap(background);
     al_uninstall_system();  

@@ -14,14 +14,20 @@
 #include "audio.h"
 #include "balas.h"
 
+
 #define FPS 30.0
 #define SCREEN_W 1000
 #define SCREEN_H 600
+#define BOMBA "res/expl.png"
 //prototipado de funciones
 int init_framework_components();
 int clean();
 int update_screen();
 int colision();
+
+void al_colisio_enem();
+int killed();
+
 //creacion de variables
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -42,11 +48,8 @@ int main(int argc, char **argv){
   al_register_event_source(event_queue, al_get_timer_event_source(timer));
   //Inicializamos al jugador principal
   fondo = init_background();
-
   player = init_player();
   enemies= init_enemies();
-  
-
 
   if(!player->nave) clean();
   if(!fondo->bg_image) clean();
@@ -89,29 +92,27 @@ int main(int argc, char **argv){
       }else if(teclas[SPACE]){
         p_shoot();
       }
-      update_screen();
-     
+      
+      update_screen();     
     } 
     // dibujamos al jugador
   }
   // siempre hay que limpiar memoria
-
   clean();
-  
   return 0;
 }
 
 int colision(){
   for(int j = 0;j<n_bullets;j++){
     //if(bullets[j]->x == player->x && (bullets[j]->y ) == player->y) return 1;
-       if (
+    if (
         (player->x > bullets[j]->x + 10 - 1) || // is player on the right side of bullet?
         (player->y > bullets[j]->y + 10 - 1) || // is player under bullet?
         (bullets[j]->x > player->x + 50 - 1) || // is b2 on the right side of player?
         (bullets[j]->y > player->y + 56 - 1))   // is b2 under player?
-    {
+      {
         return 0;
-    }else{
+      }else{
       return 1;
     }
   }
@@ -120,11 +121,19 @@ int colision(){
 
 int update_screen(){
   dibujarFondo();
+  //display_enemies();
+  //  killed();
+  //f(killed()){
   display_enemies();
+    //al_flip_display();
+    //display_enemies();
+  //
   display_bullet();
   draw_p_shoot();
+  killed();
   dibujarJugador(player);
   if(colision()){
+    clean();
     gameOver("res/gameOver.png");
     dead(player);
     free(bullets);
@@ -143,6 +152,31 @@ int clean(){
   free(player);
   return 0;
 }
+
+int killed(){
+  for(int e=0;e<c_enemies;e++){
+    for(int b=0;b<P_MAX_BULLET;b++){	
+      if (
+	  !((enemies[e]->x < p_bullets[b]->x - 120 + 1) ||
+	  (enemies[e]->y < p_bullets[b]->y - 120 + 1) ||
+	  (p_bullets[b]->x < enemies[e]->x - 130 + 1) || 
+	    (p_bullets[b]->y < enemies[e]->y - 130 + 1)))   
+	{
+	  printf("Morto");
+	  enemies[e]->ship = al_load_bitmap(PLAYER_EXPLODE);
+	  display_enemies();
+	  al_flip_display();
+	  c_enemies--;
+	  return 1;
+	}else{
+	 return 0;
+      }
+    }
+  }
+  return 0;
+}
+
+
 int init_framework_components(){
   //inicializacion del librerias
   if(!al_init()) { 
